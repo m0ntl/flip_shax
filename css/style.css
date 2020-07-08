@@ -1,0 +1,82 @@
+.tick {
+	font-size: larger; 
+	white-space:nowrap; 
+	font-family:Alef,arial,sans-serif;
+}
+
+h2, h3, h4 {
+	text-align: center;
+}
+
+.tick-label {
+	margin-top:1em;
+}
+
+.tick-char {
+	width:1.5em;
+}
+
+.tick-text-inline {
+	display:inline-block;
+	text-align:center;
+	min-width:1em;
+}
+
+.tick-text-inline+.tick-text-inline {
+	margin-left:-.325em;
+	color: #ffffff;
+	font-size: 10em;
+}
+
+.tick-group {
+	margin:0 .5em;
+	text-align:center;
+	overflow: hidden; /* Hide scrollbars */
+	overflow-x: hidden;
+}
+
+body {
+	/*#fff*/
+	background-color: #000000 !important; 
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+.tick-text-inline {
+	/*color: #595d63 !important; */
+}
+
+.tick-label {
+	color: #595d63 !important; 
+}
+
+.tick-flip-panel {
+	/*fff*/
+	color: #000000 !important; 
+}
+
+.tick-flip {
+	font-family: !important; 
+}
+
+.tick-flip-panel-text-wrapper {
+	line-height: 1.45 !important; 
+}
+
+.tick-flip-panel {
+	/*#3c3e3c*/
+	background-color: #ffffff !important; 
+}
+
+.tick-flip {
+	border-radius:0.12em !important; 
+}
+
+.end_message {
+	display: none;
+}
+
+.clock_row {
+	margin-top: 80px;
+	margin-bottom: 80px;
+}
