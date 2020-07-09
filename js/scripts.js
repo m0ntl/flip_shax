@@ -7,16 +7,28 @@ window.addEventListener("keydown", function (e) {
 		timeProgressRate = "regular";
 	} else if (e.key == "ArrowUp") {
 		timeProgressRate = "regular";
+	} else if (e.key == "m" || e.key == "M") {
+		// Increase font size for all clocks
+		increaseFontSize(".tick_font_6");
+		increaseFontSize(".tick_font_7");
+		increaseFontSize(".tick_font_10");
+	} else if (e.key == "n" || e.key == "N") {
+		// Decrease font size for all clocks
+		decreaseFontSize(".tick_font_6");
+		decreaseFontSize(".tick_font_7");
+		decreaseFontSize(".tick_font_10");
 	} else if (e.key == "f" || e.key == "F") {
 		// Display future message
 		timeProgressRate = "paused";
 		hideCounters();
 		document.getElementById("past-message").style.display = "none";
 		document.getElementById("future-message").style.display = "block";
+		hideDay();
 	} else if (e.key == "p" || e.key == "P") {
 		// Display past message
 		timeProgressRate = "paused";
 		hideCounters();
+		hideDay();
 		document.getElementById("future-message").style.display = "none";
 		document.getElementById("past-message").style.display = "block";
 	} else if (e.key == "c") {
@@ -163,10 +175,9 @@ function baseTimer() {
 	}
 
 	if(dateHolder.getFullYear() < 0) {
-		hideDay();
 		writeMonths = " BC";
+		hideDay();
 	} else {
-		showDay();
 		writeMonths = months[dateHolder.getMonth()];
 	}
 
@@ -253,9 +264,28 @@ function showCounters() {
 	document.getElementById("secondID").style.display = "block";
 	document.getElementById("minuteID").style.display = "block";
 	document.getElementById("hourID").style.display = "block";
-	document.getElementById("dayID").style.display = "block";
 	document.getElementById("monthID").style.display = "block";
 	document.getElementById("yearID").style.display = "block";
 	document.getElementById("colon1").style.display = "block";
 	document.getElementById("colon2").style.display = "block";
+	if (dateHolder.getDay() > 0) {
+		showDay();
+	}
+	
 }
+function increaseFontSize(elementClassName) {
+		var el = document.querySelectorAll(elementClassName);
+		changeFontSize(el, 2);
+}
+function decreaseFontSize(elementClassName) {
+		var el = document.querySelectorAll(elementClassName);
+		changeFontSize(el, -2);
+}
+
+function changeFontSize(elementColloction, changedValue) {
+		for ( var i = 0; i < elementColloction.length; i ++ ) {
+		var style = window.getComputedStyle(elementColloction[i], null).getPropertyValue('font-size');
+		var fontSize = parseFloat(style);
+		elementColloction[i].style.fontSize = (fontSize + changedValue) + 'px';
+	}
+}	

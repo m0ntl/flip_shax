@@ -80,3 +80,14 @@ body {
 	margin-top: 80px;
 	margin-bottom: 80px;
 }
+
+.tick_font_10 {
+	font-size: 10em; 
+}
+.tick_font_7 {
+	font-size: 7em; 
+}
+
+.tick_font_6 {
+	font-size: 6em; 
+}

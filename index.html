@@ -27,27 +27,27 @@
 				</div>
 				<div class="row clock_row">
 					<div class="col-md-3">
-						<div class="tick clock_div" data-did-init="hourTickHandler" data-value="00" id="hourID" style="font-size: 7em; text-align: center;">
+						<div class="tick clock_div tick_font_7" data-did-init="hourTickHandler" data-value="00" id="hourID" style="text-align: center;">
 							<div data-repeat="true" data-layout="horizontal" data-transform="upper -> split">
 								<span data-view="flip" data-transform="ascii -> round -> char(0-9)" class="tick-char"></span>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-1">
-						<span class="tick-text-inline" id="colon1" style="color: white; font-size: 10em; margin:-50px 0;">:</span>
+						<span class="tick-text-inline tick_font_10" id="colon1" style="color: white; margin:-50px 0;">:</span>
 					</div>
 					<div class="col-md-3">
-						<div class="tick clock_div" data-did-init="minuteTickHandler" data-value="00" id="minuteID" style="font-size: 7em; text-align: center;">
+						<div class="tick clock_div tick_font_7" data-did-init="minuteTickHandler" data-value="00" id="minuteID" style="text-align: center;">
 							<div data-repeat="true" data-layout="horizontal" data-transform="upper -> split">
 								<span data-view="flip" data-transform="ascii -> round -> char(0-9)" class="tick-char"></span>
 							</div>
 						</div>					
 					</div>
 					<div class="col-md-1">
-						<span class="tick-text-inline" id="colon2" style="color: white; font-size: 10em; margin:-50px 0;">:</span>
+						<span class="tick-text-inline tick_font_10" id="colon2" style="color: white; margin:-50px 0;">:</span>
 					</div>
 					<div class="col-md-3">
-						<div class="tick clock_div" data-did-init="secondTickHandler" data-value="00" id="secondID" style="font-size: 7em; text-align: center;">
+						<div class="tick clock_div tick_font_7" data-did-init="secondTickHandler" data-value="00" id="secondID" style="text-align: center;">
 							<div data-repeat="true" data-layout="horizontal" data-transform="upper -> split">
 								<span data-view="flip" data-transform="ascii -> round -> char(0-9)" class="tick-char"></span>
 							</div>
@@ -72,21 +72,21 @@
 				</div>
 				<div class="row">
 					<div class="col-md-2">
-						<div class="tick clock_div" data-did-init="dayTickHandler" data-value="00" id="dayID" style="font-size: 7em; text-align: center;">
+						<div class="tick clock_div tick_font_7" data-did-init="dayTickHandler" data-value="00" id="dayID" style="text-align: center;">
 							<div data-repeat="true" data-layout="horizontal" data-transform="upper -> split">
 								<span data-view="flip" data-transform="ascii -> round -> char(0-9)" class="tick-char"></span>
 							</div>
 						</div>					
 					</div>
 					<div class="col-md-4">
-						<div class="tick" data-did-init="monthTickHandler" data-value="JAN" id="monthID" style="font-size: 7em; text-align: center;">
+						<div class="tick tick_font_7" data-did-init="monthTickHandler" data-value="JAN" id="monthID" style="text-align: center;">
 							<div data-repeat="true" data-layout="horizontal" data-transform="upper -> split">
 								<span data-view="flip" data-transform="ascii -> round -> char(a-zA-Z)" class="tick-char"></span>
 							</div>
 						</div>					
 					</div>
 					<div class="col-md-6">
-						<div class="tick" data-did-init="yearTickHandler" data-value="2020" id="yearID" style="font-size: 7em; text-align: center;">
+						<div class="tick tick_font_7" data-did-init="yearTickHandler" data-value="2020" id="yearID" style="text-align: center;">
 							<div data-repeat="true" data-layout="horizontal" data-transform="upper -> split">
 								<span data-view="flip" data-transform="ascii -> round -> char(0-9\-)" class="tick-char"></span>
 							</div>
@@ -107,7 +107,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="tick-future-message end_message" id="future-message">
-							<div class="tick" data-did-init="test1" data-value="THE FUTURE" id="futureID" style="font-size: 7em; text-align: center;">
+							<div class="tick tick_font_7" data-did-init="test1" data-value="THE FUTURE" id="futureID" style="text-align: center;">
 								<div data-repeat="true" data-layout="horizontal fit" data-transform="upper -> split">
 									<span data-view="flip" data-transform="ascii -> round -> char(a-zA-Z)" class="tick-char"></span>
 								</div>
@@ -118,7 +118,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="tick-past-message end_message" id="past-message">
-							<div class="tick" data-did-init="test1" data-value="THE BIG BANG" id="pastID" style="font-size: 6em; text-align: center;">
+							<div class="tick tick_font_6" data-did-init="test1" data-value="THE BIG BANG" id="pastID" style="text-align: center;">
 								<div data-repeat="true" data-layout="horizontal fit" data-transform="upper -> split">
 									<span data-view="flip" data-transform="ascii -> round -> char(a-zA-Z)" class="tick-char"></span>
 								</div>
