@@ -21,6 +21,7 @@ window.addEventListener("keydown", function (e) {
 		decreaseFontSize(".tick_font_10");
 	} else if (e.key == "f" || e.key == "F") {
 		// Display future message
+		previousTimeProgressRate = timeProgressRate;
 		timeProgressRate = "paused";
 		hideCounters();
 		document.getElementById("past-message").style.display = "none";
@@ -28,14 +29,15 @@ window.addEventListener("keydown", function (e) {
 		hideDay();
 	} else if (e.key == "p" || e.key == "P") {
 		// Display past message
+		previousTimeProgressRate = timeProgressRate;
 		timeProgressRate = "paused";
 		hideCounters();
 		hideDay();
 		document.getElementById("future-message").style.display = "none";
 		document.getElementById("past-message").style.display = "block";
-	} else if (e.key == "c") {
+	} else if (e.key == "c" || e.key == "C") {
 		// Display counters
-		timeProgressRate = "regular";
+		timeProgressRate = previousTimeProgressRate;
 		showCounters();
 	} else if (e.key != "Alt" && e.key != "F5" && e.key != "F11" && e.key != "F12") {
 		alert("Unknown key pressed: " + e.key);
@@ -45,6 +47,7 @@ window.addEventListener("keydown", function (e) {
 var progressPacer = 0;
 // Start time with real datetime
 var timeProgressRate = "regular";
+var previousTimeProgressRate;
 // For holding time calculations
 var dateHolder = new Date();
 // var timeCalculator; Used for calculating in EPOCH time, not currently used
@@ -57,7 +60,7 @@ var writeSecs, writeMinutes, writeHours, writeDays, writeMonths, writeYears;
 var baseTimerTickInterval = 100;
 var baseIntervalTimer = setInterval(baseTimer, baseTimerTickInterval);
 
-// Arrays to hold normalized text
+// Array to hold normalized text
 var months = [
 	'JAN',
 	'FEB',
@@ -155,56 +158,56 @@ function baseTimer() {
 		alert("Error in timeProgressRate, unknown rate requested: " + timeProgressRate);
 	}
 	
-	// Convert seconds to double digits
-	writeSecs = dateHolder.getSeconds();
-	if(writeSecs < 10) {
-		writeSecs = "0" + writeSecs.toString();
-	}
-	
-	writeMinutes = dateHolder.getMinutes();
-	if(writeMinutes < 10) {
-		writeMinutes = "0" + writeMinutes.toString();
-	}
-	
-	writeHours = dateHolder.getHours();
-	if(writeHours < 10) {
-		writeHours = "0" + writeHours.toString();
-	}
-
-	writeDays = dateHolder.getDate();
-	if(writeDays < 10) {
-		writeDays = "0" + writeDays.toString();
-	}
-
-	if(dateHolder.getFullYear() < 0) {
-		writeMonths = " BC";
-		hideDay();
-	} else {
-		writeMonths = months[dateHolder.getMonth()];
-	}
-
-	var tempYearString = "";
-	writeYears = dateHolder.getFullYear();
-	if (writeYears.toString().length < 4) {
-		for (var i = 0; i < 4 - writeYears.toString().length; i++) {
-			tempYearString = tempYearString + "0";
+	if(timeProgressRate != "paused") {
+		// Convert seconds to double digits
+		writeSecs = dateHolder.getSeconds();
+		if(writeSecs < 10) {
+			writeSecs = "0" + writeSecs.toString();
 		}
-		writeYears = tempYearString + writeYears;
+		
+		writeMinutes = dateHolder.getMinutes();
+		if(writeMinutes < 10) {
+			writeMinutes = "0" + writeMinutes.toString();
+		}
+		
+		writeHours = dateHolder.getHours();
+		if(writeHours < 10) {
+			writeHours = "0" + writeHours.toString();
+		}
+
+		writeDays = dateHolder.getDate();
+		if(writeDays < 10) {
+			writeDays = "0" + writeDays.toString();
+		}
+
+		if(dateHolder.getFullYear() < 0) {
+			writeMonths = " BC";
+			hideDay();
+		} else {
+			writeMonths = months[dateHolder.getMonth()];
+		}
+
+		var tempYearString = "";
+		writeYears = dateHolder.getFullYear();
+		if (writeYears.toString().length < 4) {
+			for (var i = 0; i < 4 - writeYears.toString().length; i++) {
+				tempYearString = tempYearString + "0";
+			}
+			writeYears = tempYearString + writeYears;
+		}
+
+		// Update flipClock
+		secondTickHandler(secondElement, writeSecs);
+		minuteTickHandler(minuteElement, writeMinutes);
+		hourTickHandler(hourElement, writeHours);
+		dayTickHandler(dayElement, writeDays);
+		monthTickHandler(monthElement, writeMonths);	
+		yearTickHandler(yearElement, writeYears);	
+
+		// To keep track of rounds in case variable does not require updating every round
+		progressPacer = progressPacer < 10 ? progressPacer + 1 : 0;
 	}
-
-
 	
-
-	// Update flipClock
-	secondTickHandler(secondElement, writeSecs);
-	minuteTickHandler(minuteElement, writeMinutes);
-	hourTickHandler(hourElement, writeHours);
-	dayTickHandler(dayElement, writeDays);
-	monthTickHandler(monthElement, writeMonths);	
-	yearTickHandler(yearElement, writeYears);	
-
-	// To keep track of rounds in case variable does not require updating every round
-	progressPacer = progressPacer < 10 ? progressPacer + 1 : 0;
 } 
 
 function secondTickHandler(tick, calcSecond) {
