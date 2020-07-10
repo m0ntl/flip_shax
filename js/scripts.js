@@ -11,7 +11,7 @@ var writeSecs, writeMinutes, writeHours, writeDays, writeMonths, writeYears;
 
 var baseTimerTickInterval = 100;
 var baseIntervalTimer = setInterval(baseTimer, baseTimerTickInterval);
-
+var rateChanged = false;
 // Variables to hold time changing speed
 var addSeconds, addMinutes, addHours, addMonts, addYears;
 
@@ -40,10 +40,14 @@ window.addEventListener("keydown", function (e) {
 			case 'ff2':
 				timeProgressRate = "ff3";
 				break;
+			case 'ff3':
+				timeProgressRate = "ff4";
+				break;
 			default:
 				timeProgressRate = "ff";
 				break;
 		}
+		rateChanged = true;
 	} else if (e.key == "ArrowLeft") {
 		switch(timeProgressRate) {
 			case 'rw':
@@ -52,12 +56,17 @@ window.addEventListener("keydown", function (e) {
 			case 'rw2':
 				timeProgressRate = "rw3";
 				break;
+			case 'rw3':
+				timeProgressRate = "rw4";
+				break;
 			default:
 				timeProgressRate = "rw";
 				break;
 		}
+		rateChanged = true;
 	} else if (e.key == "ArrowDown") {
 		timeProgressRate = "paused";
+		rateChanged = true;
 	} else if (e.key == "ArrowUp") {
 		timeProgressRate = "regular";
 		showDay();
@@ -74,6 +83,7 @@ window.addEventListener("keydown", function (e) {
 	} else if (e.key == "f" || e.key == "F") {
 		// Display future message
 		timeProgressRate = "paused";
+		rateChanged = true;
 		hideCounters();
 		hideDay();
 		document.getElementById("past-message").style.display = "none";
@@ -81,6 +91,7 @@ window.addEventListener("keydown", function (e) {
 	} else if (e.key == "p" || e.key == "P") {
 		// Display past message
 		timeProgressRate = "paused";
+		rateChanged = true;
 		hideCounters();
 		hideDay();
 		document.getElementById("future-message").style.display = "none";
@@ -91,51 +102,63 @@ window.addEventListener("keydown", function (e) {
 		if(dateHolder.getFullYear() > 0) {
 			showDay();
 		}
-	} else if (e.key != "Alt" && e.key != "F5" && e.key != "F11" && e.key != "F12") {
+	} else if (e.key != "Alt" && e.key != "F5" && e.key != "F11" && e.key != "F12" && e.key != "Shift") {
 		alert("Unknown key pressed: " + e.key);
 	}
 })
 
 function baseTimer() {
-
 	if(timeProgressRate == "regular") {
 		// Regular time follows the computer clock
 		// Get latest accurate time
 		dateHolder = new Date();
-	} else if (timeProgressRate == "ff") {
-		addSeconds = 1;
-		addMinutes = 3;
-		addHours = 3;
-		addMonts = 1;
-		addYears = 11;
-	} else if (timeProgressRate == "ff2") {
-		addSeconds = 2;
-		addMinutes = 4;
-		addHours = 4;
-		addYears = 19;
-	} else if (timeProgressRate == "ff3") {
-		addYears = 29;
-	} else if (timeProgressRate == "rw") {
-		addSeconds = -1;
-		addMinutes = -3;
-		addHours = -3;
-		addMonts = -1;
-		addYears = -11;
-	} else if (timeProgressRate == "rw2") {
-		addSeconds = -2;
-		addMinutes = -4;
-		addHours = -4;
-		addYears = -19;
-	} else if (timeProgressRate == "rw3") {
-		addYears = -29;
-	} else if (timeProgressRate == "paused") {
-		addSeconds = 0;
-		addMinutes = 0;
-		addHours = 0;
-		addMonts = 0;
-		addYears = 0;
-	} else {
-		alert("Error in timeProgressRate, unknown rate requested: " + timeProgressRate);
+	} else if(rateChanged) {
+		if (timeProgressRate == "ff") {
+			addSeconds = 1;
+			addMinutes = 3;
+			addHours = 3;
+			addMonts = 1;
+			addYears = 11;
+		} else if (timeProgressRate == "ff2") {
+			addSeconds = 2;
+			addMinutes = 4;
+			addHours = 4;
+			addYears = 19;
+		} else if (timeProgressRate == "ff3") {
+			addYears = 29;
+		} else if (timeProgressRate == "ff4") {
+			addSeconds = 3;
+			addMinutes = 6;
+			addHours = 6;
+			addYears = 41;
+		} else if (timeProgressRate == "rw") {
+			addSeconds = -1;
+			addMinutes = -3;
+			addHours = -3;
+			addMonts = -1;
+			addYears = -11;
+		} else if (timeProgressRate == "rw2") {
+			addSeconds = -2;
+			addMinutes = -4;
+			addHours = -4;
+			addYears = -19;
+		} else if (timeProgressRate == "rw3") {
+			addYears = -29;
+		} else if (timeProgressRate == "rw4") {
+			addSeconds = -3;
+			addMinutes = -6;
+			addHours = -6;
+			addYears = -41;
+		} else if (timeProgressRate == "paused") {
+			addSeconds = 0;
+			addMinutes = 0;
+			addHours = 0;
+			addMonts = 0;
+			addYears = 0;
+		} else {
+			alert("Error in timeProgressRate, unknown rate requested: " + timeProgressRate);
+		}
+		rateChanged = false;
 	}
 	
 	if(timeProgressRate != "paused" && timeProgressRate != "regular") {
@@ -162,55 +185,55 @@ function baseTimer() {
 		// Add years
 		dateHolder.setFullYear(dateHolder.getFullYear() + addYears);
 	}
-	// Convert date format to printable format
-	writeSecs = dateHolder.getSeconds();
-	if(writeSecs < 10) {
-		writeSecs = "0" + writeSecs.toString();
-	}
-	
-	writeMinutes = dateHolder.getMinutes();
-	if(writeMinutes < 10) {
-		writeMinutes = "0" + writeMinutes.toString();
-	}
-	
-	writeHours = dateHolder.getHours();
-	if(writeHours < 10) {
-		writeHours = "0" + writeHours.toString();
-	}
 
-	writeDays = dateHolder.getDate();
-	if(writeDays < 10) {
-		writeDays = "0" + writeDays.toString();
-	}
-
-	if(dateHolder.getFullYear() < 0) {
-		writeMonths = " BC";
-		hideDay();
-	} else {
-		writeMonths = months[dateHolder.getMonth()];
-	}
-
-	var tempYearString = "";
-	writeYears = dateHolder.getFullYear();
-	if (writeYears.toString().length < 4) {
-		for (var i = 0; i < 4 - writeYears.toString().length; i++) {
-			tempYearString = tempYearString + "0";
+	if(timeProgressRate != "paused") {
+		// Convert date format to printable format
+		writeSecs = dateHolder.getSeconds();
+		if(writeSecs < 10) {
+			writeSecs = "0" + writeSecs.toString();
 		}
-		writeYears = tempYearString + writeYears;
+		
+		writeMinutes = dateHolder.getMinutes();
+		if(writeMinutes < 10) {
+			writeMinutes = "0" + writeMinutes.toString();
+		}
+		
+		writeHours = dateHolder.getHours();
+		if(writeHours < 10) {
+			writeHours = "0" + writeHours.toString();
+		}
+
+		writeDays = dateHolder.getDate();
+		if(writeDays < 10) {
+			writeDays = "0" + writeDays.toString();
+		}
+
+		if(dateHolder.getFullYear() < 0) {
+			writeMonths = " BC";
+			hideDay();
+		} else {
+			writeMonths = months[dateHolder.getMonth()];
+		}
+
+		var tempYearString = "";
+		writeYears = dateHolder.getFullYear();
+		if (writeYears.toString().length < 4) {
+			for (var i = 0; i < 4 - writeYears.toString().length; i++) {
+				tempYearString = tempYearString + "0";
+			}
+			writeYears = tempYearString + writeYears;
+		}
+
+		// Update flipClock
+		secondTickHandler(secondElement, writeSecs);
+		minuteTickHandler(minuteElement, writeMinutes);
+		hourTickHandler(hourElement, writeHours);
+		dayTickHandler(dayElement, writeDays);
+		monthTickHandler(monthElement, writeMonths);	
+		yearTickHandler(yearElement, writeYears);	
 	}
-
-	// Update flipClock
-	secondTickHandler(secondElement, writeSecs);
-	minuteTickHandler(minuteElement, writeMinutes);
-	hourTickHandler(hourElement, writeHours);
-	dayTickHandler(dayElement, writeDays);
-	monthTickHandler(monthElement, writeMonths);	
-	yearTickHandler(yearElement, writeYears);	
-
 	// To keep track of rounds in case variable does not require updating every round
 	progressPacer = progressPacer < 10 ? progressPacer + 1 : 0;
-
-	
 } 
 
 function secondTickHandler(tick, calcSecond) {
@@ -279,7 +302,6 @@ function showCounters() {
 	if(dateHolder.getFullYear() >= 0) {
 		showDay();
 	}
-	
 }
 function increaseFontSize(elementClassName) {
 		var el = document.querySelectorAll(elementClassName);
@@ -289,7 +311,6 @@ function decreaseFontSize(elementClassName) {
 		var el = document.querySelectorAll(elementClassName);
 		changeFontSize(el, -2);
 }
-
 function changeFontSize(elementColloction, changedValue) {
 		for ( var i = 0; i < elementColloction.length; i ++ ) {
 		var style = window.getComputedStyle(elementColloction[i], null).getPropertyValue('font-size');
