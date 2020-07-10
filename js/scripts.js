@@ -58,14 +58,9 @@ window.addEventListener("keydown", function (e) {
 		}
 	} else if (e.key == "ArrowDown") {
 		timeProgressRate = "paused";
-		if(dateHolder.getFullYear() > 0) {
-			showDay();
-		}
 	} else if (e.key == "ArrowUp") {
 		timeProgressRate = "regular";
-		if(dateHolder.getFullYear() > 0) {
-			showDay();
-		}
+		showDay();
 	} else if (e.key == "m" || e.key == "M") {
 		// Increase font size for all clocks
 		increaseFontSize(".tick_font_6");
