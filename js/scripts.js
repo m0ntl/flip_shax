@@ -75,9 +75,9 @@ window.addEventListener("keydown", function (e) {
 		// Display future message
 		timeProgressRate = "paused";
 		hideCounters();
+		hideDay();
 		document.getElementById("past-message").style.display = "none";
 		document.getElementById("future-message").style.display = "block";
-		hideDay();
 	} else if (e.key == "p" || e.key == "P") {
 		// Display past message
 		timeProgressRate = "paused";
@@ -88,6 +88,9 @@ window.addEventListener("keydown", function (e) {
 	} else if (e.key == "c" || e.key == "C") {
 		// Display counters
 		showCounters();
+		if(dateHolder.getFullYear() > 0) {
+			showDay();
+		}
 	} else if (e.key != "Alt" && e.key != "F5" && e.key != "F11" && e.key != "F12") {
 		alert("Unknown key pressed: " + e.key);
 	}
