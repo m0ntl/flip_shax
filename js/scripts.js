@@ -2,11 +2,8 @@
 var progressPacer = 0;
 // Start time with real datetime
 var timeProgressRate = "regular";
-var previousTimeProgressRate;
 // For holding time calculations
 var dateHolder = new Date();
-// var timeCalculator; Used for calculating in EPOCH time, not currently used
-
 var secondElement, minuteElement, hourElement, dayElement, monthElement, yearElement;
 
 // Variables to hold normalized text for sending to flipClock
@@ -33,20 +30,28 @@ var months = [
 
 window.addEventListener("keydown", function (e) {
 	if (e.key == "ArrowRight") {
-		if(timeProgressRate == "ff") {
-			timeProgressRate = "ff2";
-		} else if(timeProgressRate == "ff2") {
-			timeProgressRate = "ff3";
-		} else {
-			timeProgressRate = "ff";
+		switch(timeProgressRate) {
+			case 'ff':
+				timeProgressRate = "ff2";
+				break;
+			case 'ff2':
+				timeProgressRate = "ff3";
+				break;
+			default:
+				timeProgressRate = "ff";
+				break;
 		}
 	} else if (e.key == "ArrowLeft") {
-		if(timeProgressRate == "rw") {
-			timeProgressRate = "rw2";
-		} else if(timeProgressRate == "rw2") {
-			timeProgressRate = "rw3";
-		} else {
-			timeProgressRate = "rw";
+		switch(timeProgressRate) {
+			case 'rw':
+				timeProgressRate = "rw2";
+				break;
+			case 'rw2':
+				timeProgressRate = "rw3";
+				break;
+			default:
+				timeProgressRate = "rw";
+				break;
 		}
 	} else if (e.key == "ArrowDown") {
 		timeProgressRate = "regular";
