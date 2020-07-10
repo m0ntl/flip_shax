@@ -5,8 +5,10 @@ window.addEventListener("keydown", function (e) {
 		timeProgressRate = "rw";
 	} else if (e.key == "ArrowDown") {
 		timeProgressRate = "regular";
+		showDay();
 	} else if (e.key == "ArrowUp") {
 		timeProgressRate = "regular";
+		showDay();
 	} else if (e.key == "m" || e.key == "M") {
 		// Increase font size for all clocks
 		increaseFontSize(".tick_font_6");
