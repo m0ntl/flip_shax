@@ -12,6 +12,9 @@ var writeSecs, writeMinutes, writeHours, writeDays, writeMonths, writeYears;
 var baseTimerTickInterval = 100;
 var baseIntervalTimer = setInterval(baseTimer, baseTimerTickInterval);
 
+// Variables to hold time changing speed
+var addSeconds, addMinutes, addHours, addMonts, addYears;
+
 // Array to hold normalized text
 var months = [
 	'JAN',
@@ -54,11 +57,15 @@ window.addEventListener("keydown", function (e) {
 				break;
 		}
 	} else if (e.key == "ArrowDown") {
-		timeProgressRate = "regular";
-		showDay();
+		timeProgressRate = "paused";
+		if(dateHolder.getFullYear() > 0) {
+			showDay();
+		}
 	} else if (e.key == "ArrowUp") {
 		timeProgressRate = "regular";
-		showDay();
+		if(dateHolder.getFullYear() > 0) {
+			showDay();
+		}
 	} else if (e.key == "m" || e.key == "M") {
 		// Increase font size for all clocks
 		increaseFontSize(".tick_font_6");
@@ -92,11 +99,7 @@ window.addEventListener("keydown", function (e) {
 })
 
 function baseTimer() {
-	var addSeconds;
-	var addMinutes;
-	var addHours;
-	var addMonts;
-	var addYears;
+
 	if(timeProgressRate == "regular") {
 		// Regular time follows the computer clock
 		// Get latest accurate time
@@ -111,13 +114,8 @@ function baseTimer() {
 		addSeconds = 2;
 		addMinutes = 4;
 		addHours = 4;
-		addMonts = 1;
 		addYears = 19;
 	} else if (timeProgressRate == "ff3") {
-		addSeconds = 2;
-		addMinutes = 4;
-		addHours = 4;
-		addMonts = 1;
 		addYears = 29;
 	} else if (timeProgressRate == "rw") {
 		addSeconds = -1;
@@ -129,13 +127,8 @@ function baseTimer() {
 		addSeconds = -2;
 		addMinutes = -4;
 		addHours = -4;
-		addMonts = -1;
 		addYears = -19;
 	} else if (timeProgressRate == "rw3") {
-		addSeconds = -2;
-		addMinutes = -4;
-		addHours = -4;
-		addMonts = -1;
 		addYears = -29;
 	} else if (timeProgressRate == "paused") {
 		addSeconds = 0;
