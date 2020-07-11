@@ -10,9 +10,9 @@ ArrowLeft - rw: 4 speeds
 ArrowDown - Pause time progress  
 ArrowUp - Reset timer to current time  
 m/n - Increase decrease font size  
-f - Show future message (also pauses time progress) 
-p - Show past message (also pauses time progress)  
-c - Show clock  
+f - Show future message (also pauses time progress)  
+p - Show past message (also pauses time progress)    
+c - Show clock   
 
 ## License
 MIT License, Enjoy!
