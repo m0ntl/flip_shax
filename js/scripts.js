@@ -4,6 +4,8 @@ var progressPacer = 0;
 var timeProgressRate = "regular";
 // For holding time calculations
 var dateHolder = new Date();
+var regularTimeDateHolder = new Date();
+var secondsCounterRegularTimeProgress = 0;
 var secondElement, minuteElement, hourElement, dayElement, monthElement, yearElement;
 
 // Variables to hold normalized text for sending to flipClock
@@ -114,15 +116,18 @@ function baseTimer() {
 		dateHolder = new Date();
 	} else if(rateChanged) {
 		if (timeProgressRate == "ff") {
+			regularTimeDateHolder = new Date();
+			secondsCounterRegularTimeProgress = regularTimeDateHolder.getSeconds();
 			addSeconds = 1;
-			addMinutes = 3;
-			addHours = 3;
-			addMonts = 1;
-			addYears = 11;
+			addMinutes = null;
+			addHours = null;
+			addMonts = null;
+			addYears = null;
 		} else if (timeProgressRate == "ff2") {
 			addSeconds = 2;
 			addMinutes = 4;
 			addHours = 4;
+			addMonts = 1;
 			addYears = 19;
 		} else if (timeProgressRate == "ff3") {
 			addYears = 29;
@@ -132,15 +137,18 @@ function baseTimer() {
 			addHours = 6;
 			addYears = 41;
 		} else if (timeProgressRate == "rw") {
+			regularTimeDateHolder = new Date();
+			secondsCounterRegularTimeProgress = regularTimeDateHolder.getSeconds();
 			addSeconds = -1;
-			addMinutes = -3;
-			addHours = -3;
-			addMonts = -1;
-			addYears = -11;
+			addMinutes = null;
+			addHours = null;
+			addMonts = null;
+			addYears = null;
 		} else if (timeProgressRate == "rw2") {
 			addSeconds = -2;
 			addMinutes = -4;
 			addHours = -4;
+			addMonts = -1;
 			addYears = -19;
 		} else if (timeProgressRate == "rw3") {
 			addYears = -29;
@@ -163,27 +171,44 @@ function baseTimer() {
 	
 	if(timeProgressRate != "paused" && timeProgressRate != "regular") {
 		// Convert seconds to double digits
-		if(progressPacer % 2 == 0) {
+		if(timeProgressRate == "ff" || timeProgressRate == "rw") {
+			// if(progressPacer != 0 && progressPacer % 9 == 0) {
+			// 	dateHolder.setSeconds(dateHolder.getSeconds() + addSeconds);	
+			// }
+			regularTimeDateHolder = new Date();
+			if( secondsCounterRegularTimeProgress != regularTimeDateHolder.getSeconds()) {
+				secondsCounterRegularTimeProgress = regularTimeDateHolder.getSeconds();
+				dateHolder.setSeconds(dateHolder.getSeconds() + addSeconds)
+			}
+		} else if(progressPacer % 2 == 0) {
 			dateHolder.setSeconds(dateHolder.getSeconds() + addSeconds);	
 		}
 
 		//Add minutes
-		if(progressPacer % 2 == 0) {
-			dateHolder.setMinutes(dateHolder.getMinutes() + addMinutes);	
+		if(addMinutes != null) {
+			if(progressPacer % 2 == 0) {
+				dateHolder.setMinutes(dateHolder.getMinutes() + addMinutes);	
+			}
 		}
 
 		//Add house
-		if(progressPacer % 2 == 0) {
-			dateHolder.setHours(dateHolder.getHours() + addHours);	
+		if(addHours != null) {
+			if(progressPacer % 2 == 0) {
+				dateHolder.setHours(dateHolder.getHours() + addHours);	
+			}
 		}
 
 		//Add months
-		if(progressPacer % 2 == 0) {
-			dateHolder.setMonth(dateHolder.getMonth() + addMonts);	
+		if(addMonts != null) {
+			if(progressPacer % 2 == 0) {
+				dateHolder.setMonth(dateHolder.getMonth() + addMonts);	
+			}
 		}
 		
 		// Add years
-		dateHolder.setFullYear(dateHolder.getFullYear() + addYears);
+		if(addYears != null) {
+			dateHolder.setFullYear(dateHolder.getFullYear() + addYears);
+		}
 	}
 
 	if(timeProgressRate != "paused") {
