@@ -209,9 +209,14 @@ function baseTimer() {
 		}
 
 		if(dateHolder.getFullYear() < 0) {
-			writeMonths = " BC";
-			hideDay();
+			writeMonths = "BC";
+			if(document.getElementById("dayID").style.display != "none") {
+				hideDay();
+			}
 		} else {
+			if(document.getElementById("dayID").style.display == "none") {
+				showDay();
+			}
 			writeMonths = months[dateHolder.getMonth()];
 		}
 
