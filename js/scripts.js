@@ -77,6 +77,10 @@ window.addEventListener("keydown", function (e) {
 		increaseFontSize(".tick_font_6");
 		increaseFontSize(".tick_font_7");
 		increaseFontSize(".tick_font_10");
+	} else if (e.key == "j" || e.key == "J") {
+		increaseTopMargin("top_div_spacer");
+	} else if (e.key == "k" || e.key == "K") {
+		decreaseTopMargin("top_div_spacer");
 	} else if (e.key == "n" || e.key == "N") {
 		// Decrease font size for all clocks
 		decreaseFontSize(".tick_font_6");
@@ -285,7 +289,7 @@ function yearTickHandler(tick, calcYear) {
 	tick.value = calcYear;
 }
 
-function readElements() {
+window.onload = (event) => {
 	//Find elements to update
 	var second = document.querySelector('#secondID');
 	var minute = document.querySelector('#minuteID');
@@ -341,6 +345,22 @@ function decreaseFontSize(elementClassName) {
 		var el = document.querySelectorAll(elementClassName);
 		changeFontSize(el, -2);
 }
+function increaseTopMargin(elementClassName) {
+	var el = document.querySelectorAll("." + elementClassName);
+	changeMarginTop(el, 3);
+}
+function decreaseTopMargin(elementClassName) {
+	var el = document.querySelectorAll("." + elementClassName);
+	changeMarginTop(el, -3);
+}
+function changeMarginTop(elementColloction, changedValue) {
+		for ( var i = 0; i < elementColloction.length; i ++ ) {
+		var style = window.getComputedStyle(elementColloction[i], null).getPropertyValue('margin-top');
+		var marginSize = parseFloat(style);
+		elementColloction[i].style.marginTop = (marginSize + changedValue) + 'px';
+	}
+}	
+
 function changeFontSize(elementColloction, changedValue) {
 		for ( var i = 0; i < elementColloction.length; i ++ ) {
 		var style = window.getComputedStyle(elementColloction[i], null).getPropertyValue('font-size');

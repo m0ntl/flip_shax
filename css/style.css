@@ -2,6 +2,7 @@
 	font-size: larger; 
 	white-space:nowrap; 
 	font-family:Alef,arial,sans-serif;
+	text-align: center;
 }
 
 h2, h3, h4 {
@@ -38,6 +39,7 @@ h2, h3, h4 {
 body {
 	/*#fff*/
 	background-color: #000000 !important; 
+	height: 100%;
 	overflow-x: hidden;
 	overflow-y: hidden;
 }
@@ -82,12 +84,20 @@ body {
 }
 
 .tick_font_10 {
-	font-size: 10em; 
+	font-size: 9em; 
 }
 .tick_font_7 {
-	font-size: 7em; 
+	font-size: 6em; 
 }
 
 .tick_font_6 {
-	font-size: 6em; 
+	font-size: 5em; 
+}
+
+html {
+	height: 100%;
+}
+
+.top_div_spacer {
+	margin-top: 10%;
 }
