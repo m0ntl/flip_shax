@@ -16,6 +16,24 @@ var baseIntervalTimer = setInterval(baseTimer, baseTimerTickInterval);
 var rateChanged = false;
 // Variables to hold time changing speed
 var addSeconds, addMinutes, addHours, addMonts, addYears;
+var positiveYear = true;
+var clockOnly = false;
+
+
+var graphicControlKeys = ["j", "J", "k","K","n","N","m","M","ArrowDown"];
+// Sound variables
+var context;
+var savedBuffer;
+var source;
+const audio = new Audio("sound/flip_sound.mp3");
+
+try {
+    context = new (window.AudioContext || window.webkitAudioContext)();
+    source = context.createMediaElementSource(audio);
+	source.connect(context.destination);
+} catch (e) {
+    console.log("Your browser doesn't support Web Audio API");
+}
 
 // Array to hold normalized text
 var months = [
@@ -71,7 +89,8 @@ window.addEventListener("keydown", function (e) {
 		rateChanged = true;
 	} else if (e.key == "ArrowUp") {
 		timeProgressRate = "regular";
-		showDay();
+		// showDay();
+		// showDate();
 	} else if (e.key == "m" || e.key == "M") {
 		// Increase font size for all clocks
 		increaseFontSize(".tick_font_6");
@@ -86,10 +105,19 @@ window.addEventListener("keydown", function (e) {
 		decreaseFontSize(".tick_font_6");
 		decreaseFontSize(".tick_font_7");
 		decreaseFontSize(".tick_font_10");
+	} else if (e.key == "a" || e.key == "A") {
+		hideDate();
+		clockOnly = true;
+		timeProgressRate = "ff";
+		rateChanged = true;
+		dateHolder.setSeconds(0);
+		dateHolder.setMinutes(59);
+		dateHolder.setHours(6);
 	} else if (e.key == "f" || e.key == "F") {
 		// Display future message
 		timeProgressRate = "paused";
 		rateChanged = true;
+		clockOnly = false;
 		hideCounters();
 		hideDay();
 		document.getElementById("past-message").style.display = "none";
@@ -98,12 +126,14 @@ window.addEventListener("keydown", function (e) {
 		// Display past message
 		timeProgressRate = "paused";
 		rateChanged = true;
+		clockOnly = false;
 		hideCounters();
 		hideDay();
 		document.getElementById("future-message").style.display = "none";
 		document.getElementById("past-message").style.display = "block";
 	} else if (e.key == "c" || e.key == "C") {
 		// Display counters
+		clockOnly = false;
 		showCounters();
 		if(dateHolder.getFullYear() > 0) {
 			showDay();
@@ -114,6 +144,10 @@ window.addEventListener("keydown", function (e) {
 })
 
 function baseTimer() {
+	if(((timeProgressRate == "rw" || timeProgressRate == "ff") && secondsCounterRegularTimeProgress !== dateHolder.getSeconds() ) || dateHolder.getSeconds() !== new Date().getSeconds() && timeProgressRate != "paused") {
+		//audio.play();
+	}
+
 	if(timeProgressRate == "regular") {
 		// Regular time follows the computer clock
 		// Get latest accurate time
@@ -239,12 +273,17 @@ function baseTimer() {
 
 		if(dateHolder.getFullYear() < 0) {
 			writeMonths = "BC";
-			if(document.getElementById("dayID").style.display != "none") {
+			if(positiveYear == true && document.getElementById("dayID").style.display != "none") {
+				positiveYear = false;
 				hideDay();
 			}
 		} else {
-			if(document.getElementById("dayID").style.display == "none") {
-				showDay();
+			if(positiveYear == false && document.getElementById("dayID").style.display == "none") {
+				positiveYear = true;
+				if(! clockOnly) {
+					showDay();
+					showDate();
+				}
 			}
 			writeMonths = months[dateHolder.getMonth()];
 		}
@@ -295,7 +334,7 @@ window.onload = (event) => {
 	var minute = document.querySelector('#minuteID');
 	var hour = document.querySelector('#hourID');
 	var day = document.querySelector('#dayID');
-	var month = document.querySelector('#monthID');
+	var month = document.querySelector('#monthID');	
 	var year = document.querySelector('#yearID');
 	
 	//Retreive Tick Objects
@@ -310,7 +349,9 @@ function hideDay() {
 		document.getElementById("dayID").style.display = "none";
 }
 function showDay() {
+	if(!clockOnly) {
 		document.getElementById("dayID").style.display = "block";
+	}
 }
 function hideCounters() {
 	document.getElementById("secondID").style.display = "none";
@@ -321,6 +362,34 @@ function hideCounters() {
 	document.getElementById("yearID").style.display = "none";
 	document.getElementById("colon1").style.display = "none";
 	document.getElementById("colon2").style.display = "none";
+}
+function hideDate() {
+	document.getElementById("dayID").style.display = "none";
+	document.getElementById("monthID").style.display = "none";
+	document.getElementById("yearID").style.display = "none";
+
+	document.getElementById("secondID").style.display = "block";
+	document.getElementById("minuteID").style.display = "block";
+	document.getElementById("hourID").style.display = "block";
+	document.getElementById("colon1").style.display = "block";
+	document.getElementById("colon2").style.display = "block";
+
+	document.getElementById("future-message").style.display = "none";
+	document.getElementById("past-message").style.display = "none";
+}
+function showDate() {
+	document.getElementById("dayID").style.display = "block";
+	document.getElementById("monthID").style.display = "block";
+	document.getElementById("yearID").style.display = "block";
+
+	document.getElementById("secondID").style.display = "block";
+	document.getElementById("minuteID").style.display = "block";
+	document.getElementById("hourID").style.display = "block";
+	document.getElementById("colon1").style.display = "block";
+	document.getElementById("colon2").style.display = "block";
+
+	document.getElementById("future-message").style.display = "none";
+	document.getElementById("past-message").style.display = "none";
 }
 function showCounters() {
 	document.getElementById("future-message").style.display = "none";
