@@ -20,20 +20,21 @@ var positiveYear = true;
 var clockOnly = false;
 
 
-var graphicControlKeys = ["j", "J", "k","K","n","N","m","M","ArrowDown"];
-// Sound variables
-var context;
-var savedBuffer;
-var source;
-const audio = new Audio("sound/flip_sound.mp3");
+var progressSpeeds = ["ff2","ff3","ff4","rw2","rw3","rw4"];
 
-try {
-    context = new (window.AudioContext || window.webkitAudioContext)();
-    source = context.createMediaElementSource(audio);
-	source.connect(context.destination);
-} catch (e) {
-    console.log("Your browser doesn't support Web Audio API");
-}
+var audioCounter = 0;
+var audio = new Audio('sound/flip_sound.wav');
+var audio1 = new Audio('sound/flip_sound.wav');
+var audio2 = new Audio('sound/flip_sound.wav');
+var audio3 = new Audio('sound/flip_sound.wav');
+var audio4 = new Audio('sound/flip_sound.wav');
+var audio5 = new Audio('sound/flip_sound.wav');
+var audio6 = new Audio('sound/flip_sound.wav');
+var audio7 = new Audio('sound/flip_sound.wav');
+var audio8 = new Audio('sound/flip_sound.wav');
+var audio9 = new Audio('sound/flip_sound.wav');
+var audioVars = [audio, audio1, audio2, audio3, audio4, audio5, audio6, audio7, audio8, audio9];
+var muted = true;
 
 // Array to hold normalized text
 var months = [
@@ -131,6 +132,9 @@ window.addEventListener("keydown", function (e) {
 		hideDay();
 		document.getElementById("future-message").style.display = "none";
 		document.getElementById("past-message").style.display = "block";
+	} else if (e.key == "s" || e.key == "S") {
+		muted = (muted == true ? false : true);
+		playSound(audio);
 	} else if (e.key == "c" || e.key == "C") {
 		// Display counters
 		clockOnly = false;
@@ -144,10 +148,15 @@ window.addEventListener("keydown", function (e) {
 })
 
 function baseTimer() {
-	if(((timeProgressRate == "rw" || timeProgressRate == "ff") && secondsCounterRegularTimeProgress !== dateHolder.getSeconds() ) || dateHolder.getSeconds() !== new Date().getSeconds() && timeProgressRate != "paused") {
-		//audio.play();
+	if(timeProgressRate == "regular" && new Date().getSeconds() !== dateHolder.getSeconds()) {
+		playSound(audio);
+	} else if (progressSpeeds.includes(timeProgressRate)) {
+		playSound(audioVars[audioCounter]);
+		audioCounter++;
+		if(audioCounter == 10) {audioCounter = 0;}
 	}
-
+	
+	
 	if(timeProgressRate == "regular") {
 		// Regular time follows the computer clock
 		// Get latest accurate time
@@ -217,6 +226,7 @@ function baseTimer() {
 			if( secondsCounterRegularTimeProgress != regularTimeDateHolder.getSeconds()) {
 				secondsCounterRegularTimeProgress = regularTimeDateHolder.getSeconds();
 				dateHolder.setSeconds(dateHolder.getSeconds() + addSeconds)
+				playSound(audio);
 			}
 		} else if(progressPacer % 2 == 0) {
 			dateHolder.setSeconds(dateHolder.getSeconds() + addSeconds);	
@@ -280,7 +290,7 @@ function baseTimer() {
 		} else {
 			if(positiveYear == false && document.getElementById("dayID").style.display == "none") {
 				positiveYear = true;
-				if(! clockOnly) {
+				if(!clockOnly) {
 					showDay();
 					showDate();
 				}
@@ -437,3 +447,8 @@ function changeFontSize(elementColloction, changedValue) {
 		elementColloction[i].style.fontSize = (fontSize + changedValue) + 'px';
 	}
 }	
+function playSound(audioElement) {
+	if(!muted) {
+		audioElement.play();
+	}
+}

@@ -10,10 +10,12 @@ ArrowLeft - rw: 4 speeds
 ArrowDown - Pause time progress  
 ArrowUp - Reset timer to current time  
 m/n - Increase decrease font size  
-j/k - Increase decrease top margin
+j/k - Increase decrease top margin  
 f - Show future message (also pauses time progress)  
 p - Show past message (also pauses time progress)    
-c - Show clock   
-
+c - Show clock    
+a - show only time + set time to 6:59AM (on current date)  
+s - mute/unmute tick sound  
+  
 ## License
 MIT License, Enjoy!
