@@ -1,8 +1,6 @@
 # flip_shax
-A basic site utilizing flip clock: https://pqina.nl/tick/#flip
-for use in community theater
+Digital clock for use in community theater
 
-For flip clock license and usage reference: https://github.com/pqina/flip
 
 ## Command keys
 ArrowRight - ff: 4 speeds   
@@ -20,5 +18,3 @@ c - Show clock
 a - show only time + set time to 6:59AM (on current date)  
 s - mute/unmute tick sound  
   
-## License
-MIT License, Enjoy!
