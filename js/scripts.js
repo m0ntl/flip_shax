@@ -108,7 +108,7 @@ window.addEventListener("keydown", function (e) {
 		//clockOnly = true;
 		timeProgressRate = "ff";
 		rateChanged = true;
-		dateHolder.setSeconds(0);
+		dateHolder.setSeconds(43);
 		dateHolder.setMinutes(59);
 		dateHolder.setHours(6);
 	} else if (messageKeys.includes(e.key)) {
@@ -139,7 +139,7 @@ window.addEventListener("keydown", function (e) {
 		playSound(audio);
 	} else if (e.key == "c" || e.key == "C") {
 		// Display counters
-		timeProgressRate = "regular";
+		timeProgressRate = "ff";
 		clockOnly = false;
 		showCounters();
 	} else if (!ignoreKeys.includes(e.key)) {
