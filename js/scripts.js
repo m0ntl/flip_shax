@@ -19,8 +19,11 @@ var addSeconds, addMinutes, addHours, addMonts, addYears;
 var positiveYear = true;
 var clockOnly = false;
 
-
+var divIDs = ["clock","date","message"];
+var marginDivIDs = ["top_div_spacer"];
 var progressSpeeds = ["ff2","ff3","ff4","rw2","rw3","rw4"];
+var ignoreKeys = ["Alt","F5","F11","F12","Shift"];
+var messageKeys = ["f","F","p","P","b","B","r","R","t","T"];
 
 var audioCounter = 0;
 var audio = new Audio('sound/flip_sound.wav');
@@ -90,59 +93,56 @@ window.addEventListener("keydown", function (e) {
 		rateChanged = true;
 	} else if (e.key == "ArrowUp") {
 		timeProgressRate = "regular";
-		// showDay();
-		// showDate();
 	} else if (e.key == "m" || e.key == "M") {
 		// Increase font size for all clocks
-		increaseFontSize(".tick_font_6");
-		increaseFontSize(".tick_font_7");
-		increaseFontSize(".tick_font_10");
+		increaseFontSize();
 	} else if (e.key == "j" || e.key == "J") {
-		increaseTopMargin("top_div_spacer");
+		increaseTopMargin();
 	} else if (e.key == "k" || e.key == "K") {
-		decreaseTopMargin("top_div_spacer");
+		decreaseTopMargin();
 	} else if (e.key == "n" || e.key == "N") {
 		// Decrease font size for all clocks
-		decreaseFontSize(".tick_font_6");
-		decreaseFontSize(".tick_font_7");
-		decreaseFontSize(".tick_font_10");
+		decreaseFontSize();
 	} else if (e.key == "a" || e.key == "A") {
 		hideDate();
-		clockOnly = true;
+		//clockOnly = true;
 		timeProgressRate = "ff";
 		rateChanged = true;
 		dateHolder.setSeconds(0);
 		dateHolder.setMinutes(59);
 		dateHolder.setHours(6);
-	} else if (e.key == "f" || e.key == "F") {
+	} else if (messageKeys.includes(e.key)) {
 		// Display future message
 		timeProgressRate = "paused";
-		rateChanged = true;
-		clockOnly = false;
-		hideCounters();
-		hideDay();
-		document.getElementById("past-message").style.display = "none";
-		document.getElementById("future-message").style.display = "block";
-	} else if (e.key == "p" || e.key == "P") {
-		// Display past message
-		timeProgressRate = "paused";
-		rateChanged = true;
-		clockOnly = false;
-		hideCounters();
-		hideDay();
-		document.getElementById("future-message").style.display = "none";
-		document.getElementById("past-message").style.display = "block";
+		switch(e.key.toLowerCase()) {
+			case 'p':
+				showMessage("The Big Bang");
+				break;
+			case 'f':
+				showMessage("The Future");
+				break;
+			case 'b':
+				showMessage("The  Beginning of Time");
+				break;
+			case 'r':
+				showMessage("Reptile Era");
+				break;
+			case 't':
+				showMessage("Today");
+				break;
+			default:
+				showMessage("Error displaying message: " + e.key);
+				break;
+		}
 	} else if (e.key == "s" || e.key == "S") {
 		muted = (muted == true ? false : true);
 		playSound(audio);
 	} else if (e.key == "c" || e.key == "C") {
 		// Display counters
+		timeProgressRate = "regular";
 		clockOnly = false;
 		showCounters();
-		if(dateHolder.getFullYear() > 0) {
-			showDay();
-		}
-	} else if (e.key != "Alt" && e.key != "F5" && e.key != "F11" && e.key != "F12" && e.key != "Shift") {
+	} else if (!ignoreKeys.includes(e.key)) {
 		alert("Unknown key pressed: " + e.key);
 	}
 })
@@ -283,18 +283,7 @@ function baseTimer() {
 
 		if(dateHolder.getFullYear() < 0) {
 			writeMonths = "BC";
-			if(positiveYear == true && document.getElementById("dayID").style.display != "none") {
-				positiveYear = false;
-				hideDay();
-			}
 		} else {
-			if(positiveYear == false && document.getElementById("dayID").style.display == "none") {
-				positiveYear = true;
-				if(!clockOnly) {
-					showDay();
-					showDate();
-				}
-			}
 			writeMonths = months[dateHolder.getMonth()];
 		}
 
@@ -307,148 +296,85 @@ function baseTimer() {
 			writeYears = tempYearString + writeYears;
 		}
 
-		// Update flipClock
-		secondTickHandler(secondElement, writeSecs);
-		minuteTickHandler(minuteElement, writeMinutes);
-		hourTickHandler(hourElement, writeHours);
-		dayTickHandler(dayElement, writeDays);
-		monthTickHandler(monthElement, writeMonths);	
-		yearTickHandler(yearElement, writeYears);	
+		if(dateHolder.getFullYear() < 0) {
+			document.getElementById("date").innerHTML = writeMonths + "&nbsp;&emsp;" + writeYears;
+		} else {
+			document.getElementById("date").innerText =  writeDays + " / " + writeMonths + " / " + writeYears;
+		}
+		document.getElementById("clock").innerText = writeHours + " : " + writeMinutes + " : " + writeSecs;
+		 
 	}
 	// To keep track of rounds in case variable does not require updating every round
 	progressPacer = progressPacer < 10 ? progressPacer + 1 : 0;
 } 
 
-function secondTickHandler(tick, calcSecond) {
-	tick.value = calcSecond;
-}
-function minuteTickHandler(tick, calcMinute) {
-	tick.value = calcMinute;
-}
-function hourTickHandler(tick, calcHour) {
-	tick.value = calcHour;
-}
-function dayTickHandler(tick, calcDay) {
-	tick.value = calcDay;
-}
-function monthTickHandler(tick, calcMonth) {
-	tick.value = calcMonth;
-}
-function yearTickHandler(tick, calcYear) {
-	tick.value = calcYear;
-}
-
-window.onload = (event) => {
-	//Find elements to update
-	var second = document.querySelector('#secondID');
-	var minute = document.querySelector('#minuteID');
-	var hour = document.querySelector('#hourID');
-	var day = document.querySelector('#dayID');
-	var month = document.querySelector('#monthID');	
-	var year = document.querySelector('#yearID');
-	
-	//Retreive Tick Objects
-	secondElement = Tick.DOM.find(second);
-	minuteElement = Tick.DOM.find(minute);
-	hourElement = Tick.DOM.find(hour);
-	dayElement = Tick.DOM.find(day);
-	monthElement = Tick.DOM.find(month);
-	yearElement = Tick.DOM.find(year);
-}
-function hideDay() {
-		document.getElementById("dayID").style.display = "none";
-}
-function showDay() {
-	if(!clockOnly) {
-		document.getElementById("dayID").style.display = "block";
-	}
-}
 function hideCounters() {
-	document.getElementById("secondID").style.display = "none";
-	document.getElementById("minuteID").style.display = "none";
-	document.getElementById("hourID").style.display = "none";
-	document.getElementById("dayID").style.display = "none";
-	document.getElementById("monthID").style.display = "none";
-	document.getElementById("yearID").style.display = "none";
-	document.getElementById("colon1").style.display = "none";
-	document.getElementById("colon2").style.display = "none";
+	document.getElementById("date").style.display = "none";
+	document.getElementById("clock").style.display = "none";
 }
 function hideDate() {
-	document.getElementById("dayID").style.display = "none";
-	document.getElementById("monthID").style.display = "none";
-	document.getElementById("yearID").style.display = "none";
+	document.getElementById("date").style.display = "none";
+	document.getElementById("clock").style.display = "block";
 
-	document.getElementById("secondID").style.display = "block";
-	document.getElementById("minuteID").style.display = "block";
-	document.getElementById("hourID").style.display = "block";
-	document.getElementById("colon1").style.display = "block";
-	document.getElementById("colon2").style.display = "block";
-
-	document.getElementById("future-message").style.display = "none";
-	document.getElementById("past-message").style.display = "none";
+	document.getElementById("message").style.display = "none";
 }
 function showDate() {
-	document.getElementById("dayID").style.display = "block";
-	document.getElementById("monthID").style.display = "block";
-	document.getElementById("yearID").style.display = "block";
+	document.getElementById("date").style.display = "block";
+	document.getElementById("clock").style.display = "block";
 
-	document.getElementById("secondID").style.display = "block";
-	document.getElementById("minuteID").style.display = "block";
-	document.getElementById("hourID").style.display = "block";
-	document.getElementById("colon1").style.display = "block";
-	document.getElementById("colon2").style.display = "block";
-
-	document.getElementById("future-message").style.display = "none";
-	document.getElementById("past-message").style.display = "none";
+	document.getElementById("message").style.display = "none";
 }
 function showCounters() {
-	document.getElementById("future-message").style.display = "none";
-	document.getElementById("past-message").style.display = "none";
+	document.getElementById("message").style.display = "none";
 
-	document.getElementById("secondID").style.display = "block";
-	document.getElementById("minuteID").style.display = "block";
-	document.getElementById("hourID").style.display = "block";
-	document.getElementById("monthID").style.display = "block";
-	document.getElementById("yearID").style.display = "block";
-	document.getElementById("colon1").style.display = "block";
-	document.getElementById("colon2").style.display = "block";
-	if(dateHolder.getFullYear() >= 0) {
-		showDay();
-	}
+
+	document.getElementById("date").style.display = "block";
+	document.getElementById("clock").style.display = "block";
 }
 function increaseFontSize(elementClassName) {
-		var el = document.querySelectorAll(elementClassName);
+	for ( var i = 0; i < divIDs.length; i ++ ) {
+		var el = document.getElementById(divIDs[i]);
 		changeFontSize(el, 2);
-}
-function decreaseFontSize(elementClassName) {
-		var el = document.querySelectorAll(elementClassName);
-		changeFontSize(el, -2);
-}
-function increaseTopMargin(elementClassName) {
-	var el = document.querySelectorAll("." + elementClassName);
-	changeMarginTop(el, 3);
-}
-function decreaseTopMargin(elementClassName) {
-	var el = document.querySelectorAll("." + elementClassName);
-	changeMarginTop(el, -3);
-}
-function changeMarginTop(elementColloction, changedValue) {
-		for ( var i = 0; i < elementColloction.length; i ++ ) {
-		var style = window.getComputedStyle(elementColloction[i], null).getPropertyValue('margin-top');
-		var marginSize = parseFloat(style);
-		elementColloction[i].style.marginTop = (marginSize + changedValue) + 'px';
 	}
+}
+function decreaseFontSize() {
+	for ( var i = 0; i < divIDs.length; i ++ ) {
+		var el = document.getElementById(divIDs[i]);
+		changeFontSize(el, -2);
+	}
+}
+function increaseTopMargin() {
+	for ( var i = 0; i < marginDivIDs.length; i ++ ) {
+		var el = document.getElementById(marginDivIDs[i]);
+		changeMarginTop(el, 2);
+	}
+}
+function decreaseTopMargin() {
+	for ( var i = 0; i < marginDivIDs.length; i ++ ) {
+		var el = document.getElementById(marginDivIDs[i]);
+		changeMarginTop(el, -2);
+	}
+}
+function changeMarginTop(element, changedValue) {
+	var style = window.getComputedStyle(element, null).getPropertyValue('padding-top');
+	var paddingSize = parseFloat(style);
+	element.style.paddingTop = (paddingSize + changedValue) + 'px';
 }	
 
-function changeFontSize(elementColloction, changedValue) {
-		for ( var i = 0; i < elementColloction.length; i ++ ) {
-		var style = window.getComputedStyle(elementColloction[i], null).getPropertyValue('font-size');
-		var fontSize = parseFloat(style);
-		elementColloction[i].style.fontSize = (fontSize + changedValue) + 'px';
-	}
+function changeFontSize(element, changedValue) {
+	var style = window.getComputedStyle(element, null).getPropertyValue('font-size');
+	var fontSize = parseFloat(style);
+	element.style.fontSize = (fontSize + changedValue) + 'px';
 }	
 function playSound(audioElement) {
 	if(!muted) {
 		audioElement.play();
 	}
+}
+function showMessage(messageText) {
+	document.getElementById("message").innerText = messageText;
+
+	document.getElementById("date").style.display = "none";
+	document.getElementById("clock").style.display = "none";
+	document.getElementById("message").style.display = "block";
 }
