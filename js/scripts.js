@@ -39,6 +39,7 @@ var audio9 = new Audio('sound/flip_sound.wav');
 var audioVars = [audio, audio1, audio2, audio3, audio4, audio5, audio6, audio7, audio8, audio9];
 var muted = true;
 
+var marginLeftCalc = 0;
 // Array to hold normalized text
 var months = [
 	'JAN',
@@ -337,7 +338,6 @@ function baseTimer() {
 			// document.getElementById("year").innerText =  writeYears;
 		}
 		document.getElementById("clock").innerText = writeHours + " : " + writeMinutes + " : " + writeSecs;
-
 		// document.getElementById("hour").innerText = writeHours;
 		// document.getElementById("minute").innerText = writeMinutes;
 		// document.getElementById("second").innerText = writeSecs;

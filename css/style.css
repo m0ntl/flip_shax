@@ -6,6 +6,12 @@
   src: url(../fonts/yMJMMIlzdpvBhQQL_SC3X9yhF25-T1nyGy6BoWgz.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+@font-face {
+  font-family: 'digital-7m';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/digital-7m.ttf) format('truetype');
+}
 
 body {
 	/*#fff*/
@@ -29,7 +35,7 @@ html {
 }
 
 #clock {
-	font-family: 'Orbitron', sans-serif;
+	font-family: 'digital-7m', sans-serif;
 	color: #66ff99;
 	font-size: 56px;
 	text-align: center;
@@ -38,29 +44,22 @@ html {
 }
 
 #date {
-	font-family: 'Orbitron', sans-serif;
+	font-family: 'digital-7m', sans-serif;
 	color: #66ff99;
 	font-size: 56px;
 	text-align: center;
+	/*margin-left: 50px;*/
 	padding-top: 40px;
 	padding-bottom: 40px;
 }
 
 #message {
-	font-family: 'Orbitron', sans-serif;
+	font-family: 'digital-7m', sans-serif;
 	color: #66ff99;
 	font-size: 56px;
 	text-align: center;
+	/*margin-left: 50px;*/
 	padding-top: 40px;
 	padding-bottom: 40px;
 	display: none;
-}
-
-.clock {
-	font-family: 'Orbitron', sans-serif;
-	color: #66ff99;
-	font-size: 56px;
-	text-align: center;
-	padding-top: 40px;
-	padding-bottom: 40px;
 }
