@@ -1,4 +1,5 @@
 // Keeps track of update cycles for updating the clock intermittantly
+var blinkingText = false;
 var progressPacer = 0;
 // Start time with real datetime
 var timeProgressRate = "regular";
@@ -22,7 +23,7 @@ var divIDs = ["clock","date","message"];
 var marginDivIDs = ["top_div_spacer"];
 var progressSpeeds = ["ff2","ff3","ff4","ff5","rw2","rw3","rw4","rw5"];
 var ignoreKeys = ["Alt","F5","F11","F12","Shift"];
-var messageKeys = ["f","F","p","P","b","B","r","R","t","T","1","2","3","4","5","6","7"];
+var messageKeys = ["f","F","p","P","b","B","g","G","r","R","t","T","1","2","3","4","5","6","7"];
 
 var audioCounter = 0;
 var audio = new Audio('sound/flip_sound.wav');
@@ -56,6 +57,10 @@ var months = [
 ];
 
 window.addEventListener("keydown", function (e) {
+	if(blinkingText) {
+		blinkingText = false;
+		document.getElementById("blinking-message").style.display = "none";
+	}
 	if (e.key == "ArrowRight") {
 		switch(timeProgressRate) {
 			case 'ff':
@@ -135,6 +140,11 @@ window.addEventListener("keydown", function (e) {
 				break;
 			case 't':
 				showMessage("Today");
+				break;
+			case 'g':
+				document.getElementById("message").style.display = "none";
+				blinkingText = true;
+				showMessage("88:88:88");
 				break;
 			case '1':
 				showMessage("Omri Raveh");
@@ -399,9 +409,13 @@ function playSound(audioElement) {
 	}
 }
 function showMessage(messageText) {
-	document.getElementById("message").innerText = messageText;
-
+	if(blinkingText) {
+		document.getElementById("blinking-message").innerText = messageText;
+		document.getElementById("blinking-message").style.display = "block";
+	} else {
+		document.getElementById("message").innerText = messageText;
+		document.getElementById("message").style.display = "block";
+	}
 	document.getElementById("date").style.display = "none";
 	document.getElementById("clock").style.display = "none";
-	document.getElementById("message").style.display = "block";
 }

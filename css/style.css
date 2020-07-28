@@ -35,10 +35,20 @@ html {
 	height: 100%;
 }
 
-#clock, #date, #message {
+#clock, #date, #message, #blinking-message{
 	font-family: 'digital-7m', sans-serif;
 	color: #66ff99;
 	text-align: center;
 	padding-top: 40px;
 	padding-bottom: 40px;
+}
+
+.blinking{
+    animation:blinkingText 1.5s infinite;
+}
+
+@keyframes blinkingText{
+    0%  {    color: #66ff99; }
+    40% {    color: #66ff99; }
+    100%{    color: #121212; }
 }
