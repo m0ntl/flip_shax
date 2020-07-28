@@ -35,29 +35,10 @@ html {
 	height: 100%;
 }
 
-#clock {
+#clock, #date, #message {
 	font-family: 'digital-7m', sans-serif;
 	color: #66ff99;
 	text-align: center;
 	padding-top: 40px;
 	padding-bottom: 40px;
-}
-
-#date {
-	font-family: 'digital-7m', sans-serif;
-	color: #66ff99;
-	text-align: center;
-	/*margin-left: 50px;*/
-	padding-top: 40px;
-	padding-bottom: 40px;
-}
-
-#message {
-	font-family: 'digital-7m', sans-serif;
-	color: #66ff99;
-	text-align: center;
-	/*margin-left: 50px;*/
-	padding-top: 40px;
-	padding-bottom: 40px;
-	display: none;
 }
