@@ -22,7 +22,7 @@ var clockOnly = false;
 var divIDs = ["clock","date","message"];
 var marginDivIDs = ["top_div_spacer"];
 var progressSpeeds = ["ff2","ff3","ff4","ff5","rw2","rw3","rw4","rw5"];
-var ignoreKeys = ["Alt","F5","F11","F12","Shift"];
+var ignoreKeys = ["Alt","F5","F11","F12","Shift","Control"];
 var messageKeys = ["f","F","p","P","b","B","g","G","r","R","t","T","1","2","3","4","5","6","7"];
 
 var audioCounter = 0;
