@@ -181,7 +181,7 @@ window.addEventListener("keydown", function (e) {
 		showCounters();
 		rateChanged = true;
 	} else if (!ignoreKeys.includes(e.key)) {
-		alert("Unknown key pressed: " + e.key);
+		// alert("Unknown key pressed: " + e.key);
 	}
 })
 
