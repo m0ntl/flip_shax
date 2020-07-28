@@ -23,7 +23,7 @@ var divIDs = ["clock","date","message"];
 var marginDivIDs = ["top_div_spacer"];
 var progressSpeeds = ["ff2","ff3","ff4","rw2","rw3","rw4"];
 var ignoreKeys = ["Alt","F5","F11","F12","Shift"];
-var messageKeys = ["f","F","p","P","b","B","r","R","t","T"];
+var messageKeys = ["f","F","p","P","b","B","r","R","t","T","1","2","3","4","5","6","7"];
 
 var audioCounter = 0;
 var audio = new Audio('sound/flip_sound.wav');
@@ -67,6 +67,9 @@ window.addEventListener("keydown", function (e) {
 			case 'ff3':
 				timeProgressRate = "ff4";
 				break;
+			case 'ff4':
+				timeProgressRate = "ff5";
+				break;
 			default:
 				timeProgressRate = "ff";
 				break;
@@ -82,6 +85,9 @@ window.addEventListener("keydown", function (e) {
 				break;
 			case 'rw3':
 				timeProgressRate = "rw4";
+				break;
+			case 'rw4':
+				timeProgressRate = "rw5";
 				break;
 			default:
 				timeProgressRate = "rw";
@@ -106,7 +112,7 @@ window.addEventListener("keydown", function (e) {
 	} else if (e.key == "a" || e.key == "A") {
 		hideDate();
 		//clockOnly = true;
-		timeProgressRate = "ff";
+		timeProgressRate = "ff";		
 		rateChanged = true;
 		dateHolder.setSeconds(43);
 		dateHolder.setMinutes(59);
@@ -122,13 +128,34 @@ window.addEventListener("keydown", function (e) {
 				showMessage("The Future");
 				break;
 			case 'b':
-				showMessage("The  Beginning of Time");
+				showMessage("The Beginning of Life");
 				break;
 			case 'r':
 				showMessage("Reptile Era");
 				break;
 			case 't':
 				showMessage("Today");
+				break;
+			case '1':
+				showMessage("Omri Raveh");
+				break;
+			case '2':
+				showMessage("Yinon Cohen");
+				break;
+			case '3':
+				showMessage("Chihiro Tazuro");
+				break;
+			case '4':
+				showMessage("Kobe shmuely");
+				break;
+			case '5':
+				showMessage("Shachar Montlake");
+				break;
+			case '6':
+				showMessage("Zvi Sahar");
+				break;
+			case '7':
+				showMessage("Hen David");
 				break;
 			default:
 				showMessage("Error displaying message: " + e.key);
@@ -142,6 +169,7 @@ window.addEventListener("keydown", function (e) {
 		timeProgressRate = "ff";
 		clockOnly = false;
 		showCounters();
+		rateChanged = true;
 	} else if (!ignoreKeys.includes(e.key)) {
 		alert("Unknown key pressed: " + e.key);
 	}
@@ -183,6 +211,8 @@ function baseTimer() {
 			addMinutes = 6;
 			addHours = 6;
 			addYears = 41;
+		} else if (timeProgressRate == "ff5") {
+			addYears = 61;
 		} else if (timeProgressRate == "rw") {
 			regularTimeDateHolder = new Date();
 			secondsCounterRegularTimeProgress = regularTimeDateHolder.getSeconds();
@@ -204,6 +234,8 @@ function baseTimer() {
 			addMinutes = -6;
 			addHours = -6;
 			addYears = -41;
+		} else if (timeProgressRate == "rw5") {
+			addYears = -61;
 		} else if (timeProgressRate == "paused") {
 			addSeconds = 0;
 			addMinutes = 0;
@@ -300,8 +332,15 @@ function baseTimer() {
 			document.getElementById("date").innerHTML = writeMonths + "&nbsp;&emsp;" + writeYears;
 		} else {
 			document.getElementById("date").innerText =  writeDays + " / " + writeMonths + " / " + writeYears;
+			// document.getElementById("day").innerText =  writeDays;
+			// document.getElementById("month").innerText =  writeMonths;
+			// document.getElementById("year").innerText =  writeYears;
 		}
 		document.getElementById("clock").innerText = writeHours + " : " + writeMinutes + " : " + writeSecs;
+
+		// document.getElementById("hour").innerText = writeHours;
+		// document.getElementById("minute").innerText = writeMinutes;
+		// document.getElementById("second").innerText = writeSecs;
 		 
 	}
 	// To keep track of rounds in case variable does not require updating every round

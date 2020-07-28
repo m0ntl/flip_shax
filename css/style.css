@@ -29,29 +29,38 @@ html {
 }
 
 #clock {
-  font-family: 'Orbitron', sans-serif;
-  color: #66ff99;
-  font-size: 56px;
-  text-align: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
+	font-family: 'Orbitron', sans-serif;
+	color: #66ff99;
+	font-size: 56px;
+	text-align: center;
+	padding-top: 40px;
+	padding-bottom: 40px;
 }
 
 #date {
-  font-family: 'Orbitron', sans-serif;
-  color: #66ff99;
-  font-size: 56px;
-  text-align: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
+	font-family: 'Orbitron', sans-serif;
+	color: #66ff99;
+	font-size: 56px;
+	text-align: center;
+	padding-top: 40px;
+	padding-bottom: 40px;
 }
 
 #message {
-  font-family: 'Orbitron', sans-serif;
-  color: #66ff99;
-  font-size: 56px;
-  text-align: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  display: none;
+	font-family: 'Orbitron', sans-serif;
+	color: #66ff99;
+	font-size: 56px;
+	text-align: center;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	display: none;
+}
+
+.clock {
+	font-family: 'Orbitron', sans-serif;
+	color: #66ff99;
+	font-size: 56px;
+	text-align: center;
+	padding-top: 40px;
+	padding-bottom: 40px;
 }
