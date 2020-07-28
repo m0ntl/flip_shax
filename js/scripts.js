@@ -332,12 +332,12 @@ function baseTimer() {
 		if(dateHolder.getFullYear() < 0) {
 			document.getElementById("date").innerHTML = writeMonths + "&nbsp;&emsp;" + writeYears;
 		} else {
-			document.getElementById("date").innerText =  writeDays + " / " + writeMonths + " / " + writeYears;
+			document.getElementById("date").innerText =  writeDays + "/" + writeMonths + "/" + writeYears;
 			// document.getElementById("day").innerText =  writeDays;
 			// document.getElementById("month").innerText =  writeMonths;
 			// document.getElementById("year").innerText =  writeYears;
 		}
-		document.getElementById("clock").innerText = writeHours + " : " + writeMinutes + " : " + writeSecs;
+		document.getElementById("clock").innerText = writeHours + ":" + writeMinutes + ":" + writeSecs;
 		// document.getElementById("hour").innerText = writeHours;
 		// document.getElementById("minute").innerText = writeMinutes;
 		// document.getElementById("second").innerText = writeSecs;
