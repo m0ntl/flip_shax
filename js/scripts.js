@@ -6,7 +6,6 @@ var timeProgressRate = "regular";
 var dateHolder = new Date();
 var regularTimeDateHolder = new Date();
 var secondsCounterRegularTimeProgress = 0;
-var secondElement, minuteElement, hourElement, dayElement, monthElement, yearElement;
 
 // Variables to hold normalized text for sending to flipClock
 var writeSecs, writeMinutes, writeHours, writeDays, writeMonths, writeYears;
@@ -21,7 +20,7 @@ var clockOnly = false;
 
 var divIDs = ["clock","date","message"];
 var marginDivIDs = ["top_div_spacer"];
-var progressSpeeds = ["ff2","ff3","ff4","rw2","rw3","rw4"];
+var progressSpeeds = ["ff2","ff3","ff4","ff5","rw2","rw3","rw4","rw5"];
 var ignoreKeys = ["Alt","F5","F11","F12","Shift"];
 var messageKeys = ["f","F","p","P","b","B","r","R","t","T","1","2","3","4","5","6","7"];
 
@@ -252,9 +251,6 @@ function baseTimer() {
 	if(timeProgressRate != "paused" && timeProgressRate != "regular") {
 		// Convert seconds to double digits
 		if(timeProgressRate == "ff" || timeProgressRate == "rw") {
-			// if(progressPacer != 0 && progressPacer % 9 == 0) {
-			// 	dateHolder.setSeconds(dateHolder.getSeconds() + addSeconds);	
-			// }
 			regularTimeDateHolder = new Date();
 			if( secondsCounterRegularTimeProgress != regularTimeDateHolder.getSeconds()) {
 				secondsCounterRegularTimeProgress = regularTimeDateHolder.getSeconds();
@@ -333,15 +329,8 @@ function baseTimer() {
 			document.getElementById("date").innerHTML = writeMonths + "&nbsp;&emsp;" + writeYears;
 		} else {
 			document.getElementById("date").innerText =  writeDays + "/" + writeMonths + "/" + writeYears;
-			// document.getElementById("day").innerText =  writeDays;
-			// document.getElementById("month").innerText =  writeMonths;
-			// document.getElementById("year").innerText =  writeYears;
 		}
 		document.getElementById("clock").innerText = writeHours + ":" + writeMinutes + ":" + writeSecs;
-		// document.getElementById("hour").innerText = writeHours;
-		// document.getElementById("minute").innerText = writeMinutes;
-		// document.getElementById("second").innerText = writeSecs;
-		 
 	}
 	// To keep track of rounds in case variable does not require updating every round
 	progressPacer = progressPacer < 10 ? progressPacer + 1 : 0;
@@ -365,7 +354,6 @@ function showDate() {
 }
 function showCounters() {
 	document.getElementById("message").style.display = "none";
-
 
 	document.getElementById("date").style.display = "block";
 	document.getElementById("clock").style.display = "block";
