@@ -35,7 +35,7 @@ html {
 	height: 100%;
 }
 
-#clock, #date, #message, #blinking-message{
+#clock, #message, #blinking-message, #date, #blinking {
 	font-family: 'digital-7m', sans-serif;
 	color: #66ff99;
 	text-align: center;

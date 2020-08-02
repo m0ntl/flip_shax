@@ -19,7 +19,7 @@ var addSeconds, addMinutes, addHours, addMonts, addYears;
 var positiveYear = true;
 var clockOnly = false;
 
-var divIDs = ["clock","date","message"];
+var divIDs = ["clock","date","message","blinking-message"];
 var marginDivIDs = ["top_div_spacer"];
 var progressSpeeds = ["ff2","ff3","ff4","ff5","rw2","rw3","rw4","rw5"];
 var ignoreKeys = ["Alt","F5","F11","F12","Shift","Control"];
