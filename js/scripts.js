@@ -179,6 +179,7 @@ window.addEventListener("keydown", function (e) {
 		timeProgressRate = "ff";
 		clockOnly = false;
 		showCounters();
+		showDate();
 		rateChanged = true;
 	} else if (!ignoreKeys.includes(e.key)) {
 		// alert("Unknown key pressed: " + e.key);
