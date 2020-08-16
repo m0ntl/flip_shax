@@ -23,7 +23,7 @@ var divIDs = ["clock","date","message","blinking-message"];
 var marginDivIDs = ["top_div_spacer"];
 var progressSpeeds = ["ff2","ff3","ff4","ff5","rw2","rw3","rw4","rw5"];
 var ignoreKeys = ["Alt","F5","F11","F12","Shift","Control"];
-var messageKeys = ["f","F","p","P","b","B","g","G","r","R","t","T","1","2","3","4","5","6","7"];
+var messageKeys = ["y","u","i","o","f","p","b","g","r","t","1","2","3","4","5","6","7"];
 
 var audioCounter = 0;
 var audio = new Audio('sound/flip_sound.wav');
@@ -40,7 +40,7 @@ var audioVars = [audio, audio1, audio2, audio3, audio4, audio5, audio6, audio7, 
 var muted = true;
 
 var marginLeftCalc = 0;
-// Array to hold normalized text
+// Array to hold normalized text month name
 var months = [
 	'JAN',
 	'FEB',
@@ -104,17 +104,17 @@ window.addEventListener("keydown", function (e) {
 		rateChanged = true;
 	} else if (e.key == "ArrowUp") {
 		timeProgressRate = "regular";
-	} else if (e.key == "m" || e.key == "M") {
+	} else if (e.key.toLowerCase() == "m") {
 		// Increase font size for all clocks
 		increaseFontSize();
-	} else if (e.key == "j" || e.key == "J") {
+	} else if (e.key.toLowerCase() == "j") {
 		increaseTopMargin();
-	} else if (e.key == "k" || e.key == "K") {
+	} else if (e.key.toLowerCase() == "k") {
 		decreaseTopMargin();
-	} else if (e.key == "n" || e.key == "N") {
+	} else if (e.key.toLowerCase() == "n") {
 		// Decrease font size for all clocks
 		decreaseFontSize();
-	} else if (e.key == "a" || e.key == "A") {
+	} else if (e.key.toLowerCase() == "a") {
 		hideDate();
 		//clockOnly = true;
 		timeProgressRate = "ff";		
@@ -122,7 +122,7 @@ window.addEventListener("keydown", function (e) {
 		dateHolder.setSeconds(43);
 		dateHolder.setMinutes(59);
 		dateHolder.setHours(6);
-	} else if (messageKeys.includes(e.key)) {
+	} else if (messageKeys.includes(e.key.toLowerCase())) {
 		// Display future message
 		timeProgressRate = "paused";
 		switch(e.key.toLowerCase()) {
@@ -167,14 +167,30 @@ window.addEventListener("keydown", function (e) {
 			case '7':
 				showMessage("Hen David");
 				break;
+			case 'y':
+				showMessage("A day in a life");
+				break;
+			case 'u':
+				showMessage("Something strange in the neighborhood");
+				break;
+			case 'i':
+				showMessage("The disaster");
+				break;
+			case 'o':
+				showMessage("Hmmmm");
+				break;
 			default:
 				showMessage("Error displaying message: " + e.key);
 				break;
 		}
-	} else if (e.key == "s" || e.key == "S") {
+	} else if (e.key.toLowerCase() == "s") {
 		muted = (muted == true ? false : true);
 		playSound(audio);
-	} else if (e.key == "c" || e.key == "C") {
+	} else if (e.key == "[") {
+		showMatrix();
+	}  else if (e.key == "]") {
+		hideMatrix();
+	} else if (e.key.toLowerCase() == "c") {
 		// Display counters
 		timeProgressRate = "ff";
 		clockOnly = false;
@@ -357,6 +373,12 @@ function hideDate() {
 
 	document.getElementById("message").style.display = "none";
 }
+function hideBlinkingMessage() {
+	document.getElementById("blinking-message").style.display = "none";
+}
+function hideTopDivSpacer() {
+	document.getElementById("top_div_spacer").style.display = "none";
+}
 function showDate() {
 	document.getElementById("date").style.display = "block";
 	document.getElementById("clock").style.display = "block";
@@ -419,4 +441,62 @@ function showMessage(messageText) {
 	}
 	document.getElementById("date").style.display = "none";
 	document.getElementById("clock").style.display = "none";
+}
+
+function hideMatrix() {
+	 var canvas = document.getElementById("q");
+	 canvas.remove(); 
+
+	 showDate();
+	 showCounters();
+}
+function showMatrix() {
+	hideDate()
+	hideCounters();
+	hideBlinkingMessage();
+	hideTopDivSpacer();	
+
+	document.getElementById("matrixCol").style.paddingLeft = "0px"; 
+	document.getElementById("matrixCol").style.paddingLeft = "0px"; 
+
+	var screen = window.screen;
+
+	var canvas = document.createElement("canvas");
+	canvas.id = "q";
+	var width = canvas.width = screen.width;
+	var height = canvas.height = screen.height;
+
+	canvas.style.paddingLeft  = "0 px";
+	canvas.style.paddingRight  = "0 px";
+
+	var matrixHolder = document.getElementById("matrixCol");
+	matrixHolder.appendChild(canvas);
+
+	var yPositions = Array(screen.height/2).join(0).split('');
+	var ctx = canvas.getContext('2d');
+
+	var draw = function () {
+		ctx.fillStyle='rgba(0,0,0,.05)';
+		ctx.fillRect(0,0,width,height);
+		ctx.fillStyle='#0F0';
+		ctx.font = '10pt Georgia';
+		yPositions.map(function(y, index){
+			text = String.fromCharCode(1e2+Math.random()*33);
+			x = (index * 10)+10;
+			canvas.getContext('2d').fillText(text, x, y);
+			if(y > 100 + Math.random()*1e4) {
+				yPositions[index]=0;
+			} else {
+				yPositions[index] = y + 10;
+			}
+		});
+	};
+	RunMatrix();
+	function RunMatrix() {
+		if(typeof Game_Interval != "undefined") clearInterval(Game_Interval);
+		Game_Interval = setInterval(draw, 33);
+	}
+	function StopMatrix() {
+		clearInterval(Game_Interval);
+	}
 }
