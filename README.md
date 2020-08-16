@@ -17,4 +17,5 @@ t - show today message (also pauses time progress)
 c - Show clock    
 a - show only time + set time to 6:59AM (on current date)  
 s - mute/unmute tick sound  
+[] - show/hide matrix effect
   
