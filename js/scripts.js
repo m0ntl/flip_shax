@@ -26,7 +26,7 @@ var ignoreKeys = ["Alt","F5","F11","F12","Shift","Control"];
 var messageKeys = ["y","u","i","o","f","p","b","g","r","t","1","2","3","4","5","6","7"];
 
 var audioCounter = 0;
-var audio = new Audio('sound/flip_sound.wav');
+var audio  = new Audio('sound/flip_sound.wav');
 var audio1 = new Audio('sound/flip_sound.wav');
 var audio2 = new Audio('sound/flip_sound.wav');
 var audio3 = new Audio('sound/flip_sound.wav');
@@ -38,6 +38,8 @@ var audio8 = new Audio('sound/flip_sound.wav');
 var audio9 = new Audio('sound/flip_sound.wav');
 var audioVars = [audio, audio1, audio2, audio3, audio4, audio5, audio6, audio7, audio8, audio9];
 var muted = true;
+
+var matrixInterval;
 
 var marginLeftCalc = 0;
 // Array to hold normalized text month name
@@ -168,16 +170,16 @@ window.addEventListener("keydown", function (e) {
 				showMessage("Hen David");
 				break;
 			case 'y':
-				showMessage("A day in a life");
+				showMessage("Scene 1");
 				break;
 			case 'u':
-				showMessage("Something strange in the neighborhood");
+				showMessage("Scene 2");
 				break;
 			case 'i':
-				showMessage("The disaster");
+				showMessage("Scene 3");
 				break;
 			case 'o':
-				showMessage("Hmmmm");
+				showMessage("Scene 4");
 				break;
 			default:
 				showMessage("Error displaying message: " + e.key);
@@ -210,7 +212,6 @@ function baseTimer() {
 		audioCounter++;
 		if(audioCounter == 10) {audioCounter = 0;}
 	}
-	
 	
 	if(timeProgressRate == "regular") {
 		// Regular time follows the computer clock
@@ -444,11 +445,12 @@ function showMessage(messageText) {
 }
 
 function hideMatrix() {
-	 var canvas = document.getElementById("q");
-	 canvas.remove(); 
+	clearInterval(matrixInterval);
+	var canvas = document.getElementById("q");
+	canvas.remove(); 
 
-	 showDate();
-	 showCounters();
+	showDate();
+	showCounters();
 }
 function showMatrix() {
 	hideDate()
@@ -457,7 +459,7 @@ function showMatrix() {
 	hideTopDivSpacer();	
 
 	document.getElementById("matrixCol").style.paddingLeft = "0px"; 
-	document.getElementById("matrixCol").style.paddingLeft = "0px"; 
+	document.getElementById("matrixCol").style.paddingRight = "0px"; 
 
 	var screen = window.screen;
 
@@ -493,10 +495,7 @@ function showMatrix() {
 	};
 	RunMatrix();
 	function RunMatrix() {
-		if(typeof Game_Interval != "undefined") clearInterval(Game_Interval);
-		Game_Interval = setInterval(draw, 33);
-	}
-	function StopMatrix() {
-		clearInterval(Game_Interval);
+		if(typeof matrixInterval != "undefined") clearInterval(matrixInterval);
+		matrixInterval = setInterval(draw, 33);
 	}
 }
