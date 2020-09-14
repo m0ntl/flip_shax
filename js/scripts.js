@@ -23,7 +23,7 @@ var divIDs = ["clock","date","message","blinking-message"];
 var marginDivIDs = ["top_div_spacer"];
 var progressSpeeds = ["ff2","ff3","ff4","ff5","rw2","rw3","rw4","rw5"];
 var ignoreKeys = ["Alt","F5","F11","F12","Shift","Control"];
-var messageKeys = ["y","u","i","o","f","p","b","g","r","t","1","2","3","4","5","6","7"];
+var messageKeys = ["y","u","i","o","f","p","b","g","r","t","1","2","3","4","5","6","7","8","9","0"];
 
 var audioCounter = 0;
 var audio  = new Audio('sound/flip_sound.wav');
@@ -67,6 +67,7 @@ window.addEventListener("keydown", function (e) {
 		switch(timeProgressRate) {
 			case 'ff':
 				timeProgressRate = "ff2";
+				hideClock();
 				break;
 			case 'ff2':
 				timeProgressRate = "ff3";
@@ -86,6 +87,7 @@ window.addEventListener("keydown", function (e) {
 		switch(timeProgressRate) {
 			case 'rw':
 				timeProgressRate = "rw2";
+				hideClock();
 				break;
 			case 'rw2':
 				timeProgressRate = "rw3";
@@ -95,6 +97,12 @@ window.addEventListener("keydown", function (e) {
 				break;
 			case 'rw4':
 				timeProgressRate = "rw5";
+				break;
+			case 'rw5':
+				timeProgressRate = "rw6";
+				break;
+			case 'rw6':
+				timeProgressRate = "rw7";
 				break;
 			default:
 				timeProgressRate = "rw";
@@ -169,6 +177,15 @@ window.addEventListener("keydown", function (e) {
 			case '7':
 				showMessage("Hen David");
 				break;
+			case '8':
+				showMessage("888 888");
+				break;
+			case '9':
+				showMessage("999 999");
+				break;
+			case '0':
+				showMessage("000 000");
+				break;
 			case 'y':
 				showMessage("Scene 1");
 				break;
@@ -200,7 +217,7 @@ window.addEventListener("keydown", function (e) {
 		showDate();
 		rateChanged = true;
 	} else if (!ignoreKeys.includes(e.key)) {
-		// alert("Unknown key pressed: " + e.key);
+		//alert("Unknown key pressed: " + e.key);
 	}
 })
 
@@ -263,7 +280,11 @@ function baseTimer() {
 			addHours = -6;
 			addYears = -41;
 		} else if (timeProgressRate == "rw5") {
-			addYears = -61;
+			addYears = -90;
+		} else if (timeProgressRate == "rw6") {
+			addYears = -150;
+		} else if (timeProgressRate == "rw7") {
+			addYears = -1004;
 		} else if (timeProgressRate == "paused") {
 			addSeconds = 0;
 			addMinutes = 0;
@@ -314,6 +335,12 @@ function baseTimer() {
 		if(addYears != null) {
 			dateHolder.setFullYear(dateHolder.getFullYear() + addYears);
 		}
+
+		if(dateHolder.getFullYear() < -269000 ) {		
+			timeProgressRate = "paused";
+			rateChanged = true;
+		}
+
 	}
 
 	if(timeProgressRate != "paused") {
@@ -366,6 +393,9 @@ function baseTimer() {
 
 function hideCounters() {
 	document.getElementById("date").style.display = "none";
+	document.getElementById("clock").style.display = "none";
+}
+function hideClock() {
 	document.getElementById("clock").style.display = "none";
 }
 function hideDate() {
