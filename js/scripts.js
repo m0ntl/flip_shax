@@ -79,7 +79,6 @@ window.addEventListener("keydown", function (e) {
 				timeProgressRate = "ff5";
 				break;
 			default:
-				alert("ff");
 				timeProgressRate = "ff";
 				break;
 		}
