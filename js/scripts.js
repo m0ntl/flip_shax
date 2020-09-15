@@ -79,6 +79,7 @@ window.addEventListener("keydown", function (e) {
 				timeProgressRate = "ff5";
 				break;
 			default:
+				alert("ff");
 				timeProgressRate = "ff";
 				break;
 		}
@@ -284,7 +285,7 @@ function baseTimer() {
 		} else if (timeProgressRate == "rw6") {
 			addYears = -150;
 		} else if (timeProgressRate == "rw7") {
-			addYears = -1004;
+			addYears = -2004;
 		} else if (timeProgressRate == "paused") {
 			addSeconds = 0;
 			addMinutes = 0;
@@ -335,12 +336,6 @@ function baseTimer() {
 		if(addYears != null) {
 			dateHolder.setFullYear(dateHolder.getFullYear() + addYears);
 		}
-
-		if(dateHolder.getFullYear() < -269000 ) {		
-			timeProgressRate = "paused";
-			rateChanged = true;
-		}
-
 	}
 
 	if(timeProgressRate != "paused") {
@@ -382,6 +377,11 @@ function baseTimer() {
 
 		if(dateHolder.getFullYear() < 0) {
 			document.getElementById("date").innerHTML = writeMonths + "&nbsp;&emsp;" + writeYears;
+
+			if(dateHolder.getFullYear() < -269000 && timeProgressRate.startsWith("rw")) {		
+				timeProgressRate = "paused";
+				rateChanged = true;
+			}
 		} else {
 			document.getElementById("date").innerText =  writeDays + "/" + writeMonths + "/" + writeYears;
 		}
