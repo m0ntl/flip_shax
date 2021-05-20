@@ -137,19 +137,19 @@ window.addEventListener("keydown", function (e) {
 		timeProgressRate = "paused";
 		switch(e.key.toLowerCase()) {
 			case 'p':
-				showMessage("The Big Bang");
+				showMessage("המפץ הגדול");
 				break;
 			case 'f':
-				showMessage("The Future");
+				showMessage("העתיד");
 				break;
 			case 'b':
-				showMessage("The Beginning of Life");
+				showMessage("ניצוץ ראשון של חיים");
 				break;
 			case 'r':
-				showMessage("Reptile Era");
+				showMessage("עידן הזוחלים  התקופה הפרה-היסטורית");
 				break;
 			case 't':
-				showMessage("Today");
+				showMessage("היום");
 				break;
 			case 'g':
 				document.getElementById("message").style.display = "none";
@@ -157,37 +157,37 @@ window.addEventListener("keydown", function (e) {
 				showMessage("88:88:88");
 				break;
 			case '1':
-				showMessage("Omri Raveh");
+				showMessage("עמרי רווה");
 				break;
 			case '2':
-				showMessage("Yinon Cohen");
+				showMessage("ינון כהן");
 				break;
 			case '3':
-				showMessage("Chihiro Tazuro");
+				showMessage("צ'יהירו טזורו");
 				break;
 			case '4':
-				showMessage("Kobe shmuely");
+				showMessage("מוסיקה: קובי שמואלי");
 				break;
 			case '5':
-				showMessage("Shachar Montlake");
+				showMessage("עיצוב תאורה: שחר מונטלייק");
 				break;
 			case '6':
-				showMessage("Zvi Sahar");
+				showMessage("בימוי: צבי סהר");
 				break;
 			case '7':
-				showMessage("Hen David");
+				showMessage("קליפ - אנימציה");
 				break;
 			case '8':
-				showMessage("888 888");
+				showMessage("אנסמבל עיתים             Puppet Cinema");
 				break;
 			case '9':
-				showMessage("999 999");
+				showMessage("itimensemble.com");
 				break;
 			case '0':
-				showMessage("000 000");
+				showMessage("המשך יבוא");
 				break;
 			case 'y':
-				showMessage("Scene 1");
+				showMessage("למחרת");
 				break;
 			case 'u':
 				showMessage("Scene 2");
@@ -197,7 +197,7 @@ window.addEventListener("keydown", function (e) {
 				break;
 			case 'o':
 				showMessage("Scene 4");
-				break;
+				break;				
 			default:
 				showMessage("Error displaying message: " + e.key);
 				break;
@@ -360,7 +360,7 @@ function baseTimer() {
 		}
 
 		if(dateHolder.getFullYear() < 0) {
-			writeMonths = "BC";
+			writeMonths = "";
 		} else {
 			writeMonths = months[dateHolder.getMonth()];
 		}
@@ -375,7 +375,7 @@ function baseTimer() {
 		}
 
 		if(dateHolder.getFullYear() < 0) {
-			document.getElementById("date").innerHTML = writeMonths + "&nbsp;&emsp;" + writeYears;
+			document.getElementById("date").innerHTML = writeYears;
 
 			if(dateHolder.getFullYear() < -269000 && timeProgressRate.startsWith("rw")) {		
 				timeProgressRate = "paused";

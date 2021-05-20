@@ -12,6 +12,13 @@
   font-weight: 400;
   src: url(../fonts/digital-7m.ttf) format('truetype');
 }
+@font-face {
+  font-family: 'ArbelG-Regular';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/ArbelG-Regular.woff) format('truetype');
+}
+
 
 body {
 	/*#fff*/
@@ -36,7 +43,7 @@ html {
 }
 
 #clock, #message, #blinking-message, #date, #blinking {
-	font-family: 'digital-7m', sans-serif;
+	font-family: 'ArbelG-Regular', sans-serif;
 	/*color: #66ff99;*/
 	color: #0F0;
 	text-align: center;
@@ -49,7 +56,7 @@ html {
 }
 
 @keyframes blinkingText{
-    0%  {    color: #66ff99; }
-    40% {    color: #66ff99; }
-    100%{    color: #121212; }
+    0%  {    color: #000; }
+    20% {    color: #000; }
+    100%{    color: #0F0; }
 }
