@@ -12,6 +12,12 @@
   font-weight: 400;
   src: url(../fonts/digital-7m.ttf) format('truetype');
 }
+@font-face {
+  font-family: 'digitalregularwebfont';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/digitalregularwebfont.ttf) format('truetype');
+}
 
 body {
 	/*#fff*/
@@ -36,7 +42,7 @@ html {
 }
 
 #clock, #message, #blinking-message, #date, #blinking {
-	font-family: 'digital-7m', sans-serif;
+	font-family: 'digitalregularwebfont', sans-serif;
 	/*color: #66ff99;*/
 	color: #0F0;
 	text-align: center;
