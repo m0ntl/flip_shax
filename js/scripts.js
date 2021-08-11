@@ -362,7 +362,7 @@ function baseTimer() {
 		if(dateHolder.getFullYear() < 0) {
 			writeMonths = "";
 		} else {
-			writeMonths = months[dateHolder.getMonth()];
+			writeMonths = dateHolder.getMonth();
 		}
 
 		var tempYearString = "";
