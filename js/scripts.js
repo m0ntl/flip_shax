@@ -146,7 +146,7 @@ window.addEventListener("keydown", function (e) {
 				showMessage("ניצוץ ראשון של חיים");
 				break;
 			case 'r':
-				showMessage("עידן הזוחלים  התקופה הפרה-היסטורית");
+				showMessage("עידן הזוחלים");
 				break;
 			case 't':
 				showMessage("היום");
